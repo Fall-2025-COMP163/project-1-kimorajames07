@@ -7,14 +7,14 @@ AI Usage:
 AI assistance used for logic verification and test alignment (no code copied directly).
 """
 
-import os
+import os #checks if this file exists ts
 
 def calculate_stats(character_class, level):
     """Calculates base stats based on class and level."""
     if character_class is None:
         return (0, 0, 0)
-    cls = character_class.lower()
-    if cls == "warrior":
+    cls = character_class.lower() # makes the name lowercase
+    if cls == "warrior":          #checks the class to assign different stats
         strength = 10 + level * 3
         magic = 2 + level
         health = 100 + level * 10
@@ -34,12 +34,12 @@ def calculate_stats(character_class, level):
         strength = 5 + level
         magic = 5 + level
         health = 50 + level * 5
-    return (strength, magic, health)
+    return (strength, magic, health) #returns those numbers and sends a tuple back to who called the function 
 
 
-def create_character(name, character_class):
+def create_character(name, character_class): # new function
     """Creates a new character dictionary with calculated stats."""
-    if name is None or name == "" or character_class is None:
+    if name is None or name == "" or character_class is None: #if none it's invalid
         return None
     level = 1
     strength, magic, health = calculate_stats(character_class, level)
@@ -52,22 +52,22 @@ def create_character(name, character_class):
         "health": health,
         "gold": 100
     }
-    return character
+    return character #returns dictionary
+#starts at level 1 and calls the previous function to get stats 
 
-
-def save_character(character, filename):
+def save_character(character, filename): #if no character or filename is given, don't save
     """Saves character to a text file in the required format."""
     if character is None or filename is None or filename == "":
         return False
 
     # Check if directory exists
-    parts = filename.split("/")
+    parts = filename.split("/") #seperates file name via "/" if its lengrth is more than one than you join it at the last indeex
     if len(parts) > 1:
         directory = "/".join(parts[:-1])
         if directory != "" and not os.path.exists(directory):
             return False
 
-    file = open(filename, "w")
+    file = open(filename, "w") #opens and creates file for writting(overwrites)
     file.write(f"Character Name: {character['name']}\n")
     file.write(f"Class: {character['class']}\n")
     file.write(f"Level: {character['level']}\n")
@@ -76,19 +76,19 @@ def save_character(character, filename):
     file.write(f"Health: {character['health']}\n")
     file.write(f"Gold: {character['gold']}\n")
     file.close()
-    return True
+    return True #closes the file and checks the text format and the true return value
 
 
-def load_character(filename):
+def load_character(filename): #recreates the character dictionary
     """Loads a character from a text file and returns a dictionary."""
-    if not os.path.exists(filename):
+    if not os.path.exists(filename): #if file doesn't exist
         return None
 
-    file = open(filename, "r")
+    file = open(filename, "r") #opens file for reading and reads all the lines into a list, string
     lines = file.readlines()
-    file.close()
+    file.close() #closes
 
-    char = {}
+    char = {}                # goes throuugh each line , removes newlines, and splits into key and parts
     for line in lines:
         parts = line.strip().split(": ")
         if len(parts) == 2:
@@ -107,11 +107,11 @@ def load_character(filename):
                 char["health"] = int(value)
             elif key == "Gold":
                 char["gold"] = int(value)
-    return char
+    return char #returns itb& its the same dictionary
 
 
 def display_character(character):
-    """Prints formatted character info."""
+    """Prints formatted character info.""" #printing
     print("=== CHARACTER SHEET ===")
     print(f"Name: {character['name']}")
     print(f"Class: {character['class']}")
@@ -135,7 +135,7 @@ def level_up(character):
 
 # Optional test block
 if __name__ == "__main__":
-    char = create_character("TestHero", "Warrior")
+    char = create_character("TestHero", "Warrior") #runs when you run the file directly
     display_character(char)
     save_character(char, "testhero.txt")
     loaded = load_character("testhero.txt")
