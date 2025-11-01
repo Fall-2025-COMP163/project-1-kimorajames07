@@ -7,7 +7,7 @@ AI Usage:
 AI assistance used for logic verification and test alignment (no code copied directly).
 """
 
-import os #checks if this file exists ts
+import os #imports os module
 
 def calculate_stats(character_class, level):
     """Calculates base stats based on class and level."""
